@@ -518,7 +518,7 @@ open class StatementParser(
       error(builder, message("expected.statement"))
     }
     else if (!builder.expect(JavaSyntaxTokenType.WHILE_KEYWORD)) {
-      error(builder, message("expected.while"))
+      //error(builder, message("expected.while"))
     }
     else if (parseExprInParenth(builder)) {
       semicolon(builder)
