@@ -348,6 +348,7 @@ public final class GroovyCompletionData {
       result.consume(keyword("default", defaultType));
     }
     if (afterTry(context)) {
+      result.consume(keyword(JavaKeywords.LOG, JavaTailTypes.LOG_SEMICOLON));
       result.consume(keyword(JavaKeywords.CATCH, JavaTailTypes.CATCH_LPARENTH));
       result.consume(keyword(JavaKeywords.FINALLY, JavaTailTypes.FINALLY_LBRACE));
     }

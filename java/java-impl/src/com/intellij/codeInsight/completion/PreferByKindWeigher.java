@@ -337,7 +337,7 @@ public class PreferByKindWeigher extends LookupElementWeigher {
         isLastStatement(parentStatement)) {
       return ThreeState.YES;
     }
-    if (JavaKeywords.ELSE.equals(keyword) || JavaKeywords.FINALLY.equals(keyword) || JavaKeywords.CATCH.equals(keyword)) {
+    if (JavaKeywords.ELSE.equals(keyword) || JavaKeywords.FINALLY.equals(keyword) || JavaKeywords.CATCH.equals(keyword) || JavaKeywords.LOG.equals(keyword)) {
       return ThreeState.YES;
     }
     if (JavaKeywords.TRUE.equals(keyword) || JavaKeywords.FALSE.equals(keyword)) {

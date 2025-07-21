@@ -1243,522 +1243,527 @@ companion object {
             return SyntaxTokenTypes.BAD_CHARACTER;
             }
           // fall through
-          105 -> break
+          106 -> break
           2 -> {
             return JavaSyntaxTokenType.EXCL;
             }
           // fall through
-          106 -> break
+          107 -> break
           3 -> {
             return JavaSyntaxTokenType.IDENTIFIER;
             }
           // fall through
-          107 -> break
+          108 -> break
           4 -> {
             return JavaSyntaxTokenType.PERC;
             }
           // fall through
-          108 -> break
+          109 -> break
           5 -> {
             return JavaSyntaxTokenType.AND;
             }
           // fall through
-          109 -> break
+          110 -> break
           6 -> {
             return JavaSyntaxTokenType.LPARENTH;
             }
           // fall through
-          110 -> break
+          111 -> break
           7 -> {
             return JavaSyntaxTokenType.RPARENTH;
             }
           // fall through
-          111 -> break
+          112 -> break
           8 -> {
             return JavaSyntaxTokenType.ASTERISK;
             }
           // fall through
-          112 -> break
+          113 -> break
           9 -> {
             return JavaSyntaxTokenType.PLUS;
             }
           // fall through
-          113 -> break
+          114 -> break
           10 -> {
             return JavaSyntaxTokenType.COMMA;
             }
           // fall through
-          114 -> break
+          115 -> break
           11 -> {
             return JavaSyntaxTokenType.MINUS;
             }
           // fall through
-          115 -> break
+          116 -> break
           12 -> {
             return JavaSyntaxTokenType.DOT;
             }
           // fall through
-          116 -> break
+          117 -> break
           13 -> {
             return JavaSyntaxTokenType.DIV;
             }
           // fall through
-          117 -> break
+          118 -> break
           14 -> {
             return JavaSyntaxTokenType.INTEGER_LITERAL;
             }
           // fall through
-          118 -> break
+          119 -> break
           15 -> {
             return JavaSyntaxTokenType.COLON;
             }
           // fall through
-          119 -> break
+          120 -> break
           16 -> {
             return JavaSyntaxTokenType.SEMICOLON;
             }
           // fall through
-          120 -> break
+          121 -> break
           17 -> {
             return JavaSyntaxTokenType.LT;
             }
           // fall through
-          121 -> break
+          122 -> break
           18 -> {
             return JavaSyntaxTokenType.EQ;
             }
           // fall through
-          122 -> break
+          123 -> break
           19 -> {
             return JavaSyntaxTokenType.GT;
             }
           // fall through
-          123 -> break
+          124 -> break
           20 -> {
             return JavaSyntaxTokenType.QUEST;
             }
           // fall through
-          124 -> break
+          125 -> break
           21 -> {
             return JavaSyntaxTokenType.AT;
             }
           // fall through
-          125 -> break
+          126 -> break
           22 -> {
             return JavaSyntaxTokenType.LBRACKET;
             }
           // fall through
-          126 -> break
+          127 -> break
           23 -> {
             return JavaSyntaxTokenType.RBRACKET;
             }
           // fall through
-          127 -> break
+          128 -> break
           24 -> {
             return JavaSyntaxTokenType.XOR;
             }
           // fall through
-          128 -> break
+          129 -> break
           25 -> {
             return JavaSyntaxTokenType.LBRACE;
             }
           // fall through
-          129 -> break
+          130 -> break
           26 -> {
             return JavaSyntaxTokenType.OR;
             }
           // fall through
-          130 -> break
+          131 -> break
           27 -> {
             return JavaSyntaxTokenType.RBRACE;
             }
           // fall through
-          131 -> break
+          132 -> break
           28 -> {
             return JavaSyntaxTokenType.TILDE;
             }
           // fall through
-          132 -> break
+          133 -> break
           29 -> {
             return JavaSyntaxTokenType.NE;
             }
           // fall through
-          133 -> break
+          134 -> break
           30 -> {
             return JavaSyntaxTokenType.PERCEQ;
             }
           // fall through
-          134 -> break
+          135 -> break
           31 -> {
             return JavaSyntaxTokenType.ANDAND;
             }
           // fall through
-          135 -> break
+          136 -> break
           32 -> {
             return JavaSyntaxTokenType.ANDEQ;
             }
           // fall through
-          136 -> break
+          137 -> break
           33 -> {
             return JavaSyntaxTokenType.ASTERISKEQ;
             }
           // fall through
-          137 -> break
+          138 -> break
           34 -> {
             return JavaSyntaxTokenType.PLUSPLUS;
             }
           // fall through
-          138 -> break
+          139 -> break
           35 -> {
             return JavaSyntaxTokenType.PLUSEQ;
             }
           // fall through
-          139 -> break
+          140 -> break
           36 -> {
             return JavaSyntaxTokenType.MINUSMINUS;
             }
           // fall through
-          140 -> break
+          141 -> break
           37 -> {
             return JavaSyntaxTokenType.MINUSEQ;
             }
           // fall through
-          141 -> break
+          142 -> break
           38 -> {
             return JavaSyntaxTokenType.ARROW;
             }
           // fall through
-          142 -> break
+          143 -> break
           39 -> {
             return JavaSyntaxTokenType.DOUBLE_LITERAL;
             }
           // fall through
-          143 -> break
+          144 -> break
           40 -> {
             return JavaSyntaxTokenType.DIVEQ;
             }
           // fall through
-          144 -> break
+          145 -> break
           41 -> {
             return JavaSyntaxTokenType.FLOAT_LITERAL;
             }
           // fall through
-          145 -> break
+          146 -> break
           42 -> {
             return JavaSyntaxTokenType.LONG_LITERAL;
             }
           // fall through
-          146 -> break
+          147 -> break
           43 -> {
             return JavaSyntaxTokenType.DOUBLE_COLON;
             }
           // fall through
-          147 -> break
+          148 -> break
           44 -> {
             return JavaSyntaxTokenType.LTLT;
             }
           // fall through
-          148 -> break
+          149 -> break
           45 -> {
             return JavaSyntaxTokenType.LE;
             }
           // fall through
-          149 -> break
+          150 -> break
           46 -> {
             return JavaSyntaxTokenType.EQEQ;
             }
           // fall through
-          150 -> break
+          151 -> break
           47 -> {
             return JavaSyntaxTokenType.XOREQ;
             }
           // fall through
-          151 -> break
+          152 -> break
           48 -> {
             return JavaSyntaxTokenType.DO_KEYWORD;
             }
           // fall through
-          152 -> break
+          153 -> break
           49 -> {
             return JavaSyntaxTokenType.IF_KEYWORD;
             }
           // fall through
-          153 -> break
+          154 -> break
           50 -> {
             return JavaSyntaxTokenType.OREQ;
             }
           // fall through
-          154 -> break
+          155 -> break
           51 -> {
             return JavaSyntaxTokenType.OROR;
             }
           // fall through
-          155 -> break
+          156 -> break
           52 -> {
             return JavaSyntaxTokenType.ELLIPSIS;
             }
           // fall through
-          156 -> break
+          157 -> break
           53 -> {
             return JavaSyntaxTokenType.LTLTEQ;
             }
           // fall through
-          157 -> break
+          158 -> break
           54 -> {
             return JavaSyntaxTokenType.FOR_KEYWORD;
             }
           // fall through
-          158 -> break
+          159 -> break
           55 -> {
             return JavaSyntaxTokenType.INT_KEYWORD;
             }
           // fall through
-          159 -> break
+          160 -> break
           56 -> {
             return JavaSyntaxTokenType.NEW_KEYWORD;
             }
           // fall through
-          160 -> break
+          161 -> break
           57 -> {
             return JavaSyntaxTokenType.TRY_KEYWORD;
             }
           // fall through
-          161 -> break
+          162 -> break
           58 -> {
             return JavaSyntaxTokenType.BYTE_KEYWORD;
             }
           // fall through
-          162 -> break
+          163 -> break
           59 -> {
             return JavaSyntaxTokenType.CASE_KEYWORD;
             }
           // fall through
-          163 -> break
+          164 -> break
           60 -> {
             return JavaSyntaxTokenType.CHAR_KEYWORD;
             }
           // fall through
-          164 -> break
+          165 -> break
           61 -> {
             return JavaSyntaxTokenType.ELSE_KEYWORD;
             }
           // fall through
-          165 -> break
+          166 -> break
           62 -> {
             return if (myEnumKeyword) JavaSyntaxTokenType.ENUM_KEYWORD else JavaSyntaxTokenType.IDENTIFIER;
             }
           // fall through
-          166 -> break
+          167 -> break
           63 -> {
             return JavaSyntaxTokenType.GOTO_KEYWORD;
             }
           // fall through
-          167 -> break
+          168 -> break
           64 -> {
             return JavaSyntaxTokenType.LONG_KEYWORD;
             }
           // fall through
-          168 -> break
+          169 -> break
           65 -> {
             return JavaSyntaxTokenType.NULL_KEYWORD;
             }
           // fall through
-          169 -> break
+          170 -> break
           66 -> {
             return JavaSyntaxTokenType.THIS_KEYWORD;
             }
           // fall through
-          170 -> break
+          171 -> break
           67 -> {
             return JavaSyntaxTokenType.TRUE_KEYWORD;
             }
           // fall through
-          171 -> break
+          172 -> break
           68 -> {
             return JavaSyntaxTokenType.VOID_KEYWORD;
             }
           // fall through
-          172 -> break
+          173 -> break
           69 -> {
             return JavaSyntaxTokenType.BREAK_KEYWORD;
             }
           // fall through
-          173 -> break
+          174 -> break
           70 -> {
             return JavaSyntaxTokenType.CATCH_KEYWORD;
             }
           // fall through
-          174 -> break
+          175 -> break
           71 -> {
             return JavaSyntaxTokenType.CLASS_KEYWORD;
             }
           // fall through
-          175 -> break
+          176 -> break
           72 -> {
             return JavaSyntaxTokenType.CONST_KEYWORD;
             }
           // fall through
-          176 -> break
+          177 -> break
           73 -> {
             return JavaSyntaxTokenType.FALSE_KEYWORD;
             }
           // fall through
-          177 -> break
+          178 -> break
           74 -> {
             return JavaSyntaxTokenType.FINAL_KEYWORD;
             }
           // fall through
-          178 -> break
+          179 -> break
           75 -> {
             return JavaSyntaxTokenType.FLOAT_KEYWORD;
             }
           // fall through
-          179 -> break
+          180 -> break
           76 -> {
             return JavaSyntaxTokenType.SHORT_KEYWORD;
             }
           // fall through
-          180 -> break
+          181 -> break
           77 -> {
             return JavaSyntaxTokenType.SUPER_KEYWORD;
             }
           // fall through
-          181 -> break
+          182 -> break
           78 -> {
             return JavaSyntaxTokenType.THROW_KEYWORD;
             }
           // fall through
-          182 -> break
+          183 -> break
           79 -> {
             return JavaSyntaxTokenType.WHILE_KEYWORD;
             }
           // fall through
-          183 -> break
+          184 -> break
           80 -> {
             return if (myAssertKeyword) JavaSyntaxTokenType.ASSERT_KEYWORD else JavaSyntaxTokenType.IDENTIFIER;
             }
           // fall through
-          184 -> break
+          185 -> break
           81 -> {
             return JavaSyntaxTokenType.DOUBLE_KEYWORD;
             }
           // fall through
-          185 -> break
+          186 -> break
           82 -> {
             return JavaSyntaxTokenType.IMPORT_KEYWORD;
             }
           // fall through
-          186 -> break
+          187 -> break
           83 -> {
             return JavaSyntaxTokenType.NATIVE_KEYWORD;
             }
           // fall through
-          187 -> break
+          188 -> break
           84 -> {
             return JavaSyntaxTokenType.PUBLIC_KEYWORD;
             }
           // fall through
-          188 -> break
+          189 -> break
           85 -> {
             return JavaSyntaxTokenType.RETURN_KEYWORD;
             }
           // fall through
-          189 -> break
+          190 -> break
           86 -> {
             return JavaSyntaxTokenType.STATIC_KEYWORD;
             }
           // fall through
-          190 -> break
+          191 -> break
           87 -> {
             return JavaSyntaxTokenType.SWITCH_KEYWORD;
             }
           // fall through
-          191 -> break
+          192 -> break
           88 -> {
             return JavaSyntaxTokenType.THROWS_KEYWORD;
             }
           // fall through
-          192 -> break
+          193 -> break
           89 -> {
             return JavaSyntaxTokenType.BOOLEAN_KEYWORD;
             }
           // fall through
-          193 -> break
+          194 -> break
           90 -> {
             return JavaSyntaxTokenType.DEFAULT_KEYWORD;
             }
           // fall through
-          194 -> break
+          195 -> break
           91 -> {
             return JavaSyntaxTokenType.EXTENDS_KEYWORD;
             }
           // fall through
-          195 -> break
+          196 -> break
           92 -> {
             return JavaSyntaxTokenType.FINALLY_KEYWORD;
             }
           // fall through
-          196 -> break
+          197 -> break
           93 -> {
             return JavaSyntaxTokenType.PACKAGE_KEYWORD;
             }
           // fall through
-          197 -> break
+          198 -> break
           94 -> {
             return JavaSyntaxTokenType.PRIVATE_KEYWORD;
             }
           // fall through
-          198 -> break
+          199 -> break
           95 -> {
             return JavaSyntaxTokenType.ABSTRACT_KEYWORD;
             }
           // fall through
-          199 -> break
+          200 -> break
           96 -> {
             return JavaSyntaxTokenType.CONTINUE_KEYWORD;
             }
           // fall through
-          200 -> break
+          201 -> break
           97 -> {
             return JavaSyntaxTokenType.STRICTFP_KEYWORD;
             }
           // fall through
-          201 -> break
+          202 -> break
           98 -> {
             return JavaSyntaxTokenType.VOLATILE_KEYWORD;
             }
           // fall through
-          202 -> break
+          203 -> break
           99 -> {
             return JavaSyntaxTokenType.INTERFACE_KEYWORD;
             }
           // fall through
-          203 -> break
+          204 -> break
           100 -> {
             return JavaSyntaxTokenType.PROTECTED_KEYWORD;
             }
           // fall through
-          204 -> break
+          205 -> break
           101 -> {
             return JavaSyntaxTokenType.TRANSIENT_KEYWORD;
             }
           // fall through
-          205 -> break
+          206 -> break
           102 -> {
             return JavaSyntaxTokenType.IMPLEMENTS_KEYWORD;
             }
           // fall through
-          206 -> break
+          207 -> break
           103 -> {
             return JavaSyntaxTokenType.INSTANCEOF_KEYWORD;
             }
           // fall through
-          207 -> break
+          208 -> break
           104 -> {
             return JavaSyntaxTokenType.SYNCHRONIZED_KEYWORD;
             }
           // fall through
-          208 -> break
+          209 -> break
+          105 -> {
+            return JavaSyntaxTokenType.LOG_KEYWORD;
+          }
+          // fall through
+          210 -> break
           else ->
             zzScanError(ZZ_NO_MATCH)
         }

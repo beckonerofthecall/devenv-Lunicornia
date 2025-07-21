@@ -40,6 +40,7 @@ object JavaSyntaxTokenType {
   @JvmField val BYTE_KEYWORD: SyntaxElementType = SyntaxElementType("BYTE_KEYWORD")
   @JvmField val CASE_KEYWORD: SyntaxElementType = SyntaxElementType("CASE_KEYWORD")
   @JvmField val CATCH_KEYWORD: SyntaxElementType = SyntaxElementType("CATCH_KEYWORD")
+  @JvmField val LOG_KEYWORD: SyntaxElementType = SyntaxElementType("LOG_KEYWORD")
   @JvmField val CHAR_KEYWORD: SyntaxElementType = SyntaxElementType("CHAR_KEYWORD")
   @JvmField val CLASS_KEYWORD: SyntaxElementType = SyntaxElementType("CLASS_KEYWORD")
   @JvmField val CONST_KEYWORD: SyntaxElementType = SyntaxElementType("CONST_KEYWORD")
@@ -190,6 +191,7 @@ object JavaSyntaxTokenType {
     BYTE_KEYWORD,
     CASE_KEYWORD,
     CATCH_KEYWORD,
+    LOG_KEYWORD,
     CHAR_KEYWORD,
     CLASS_KEYWORD,
     CONST_KEYWORD,

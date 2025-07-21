@@ -14,6 +14,7 @@ object JavaKeywords {
   const val BYTE: @NlsSafe String = "byte"
   const val CASE: @NlsSafe String = "case"
   const val CATCH: @NlsSafe String = "catch"
+  const val LOG: @NlsSafe String = "log"
   const val CHAR: @NlsSafe String = "char"
   const val CLASS: @NlsSafe String = "class"
   const val CONST: @NlsSafe String = "const"

@@ -13,7 +13,7 @@ import java.util.HashSet;
 public final class TextUtil {
   private static final HashSet<String> KEYWORDS = new HashSet<>(Arrays.asList(
     "abstract", "default", "if", "private", "this", "boolean", "do", "implements", "protected", "throw", "break", "double", "import",
-    "public", "throws", "byte", "else", "instanceof", "return", "transient", "case", "extends", "int", "short", "try", "catch", "final",
+    "public", "throws", "byte", "else", "instanceof", "return", "transient", "case", "extends", "int", "short", "try", "catch", "final", "log",
     "interface", "static", "void", "char", "finally", "long", "strictfp", "volatile", "class", "float", "native", "super", "while",
     "const", "for", "new", "switch", "continue", "goto", "package", "synchronized", "true", "false", "null", "assert"));
 

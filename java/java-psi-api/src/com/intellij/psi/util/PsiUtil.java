@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
 import static com.intellij.java.syntax.parser.JavaKeywords.*;
 
 public final class PsiUtil extends PsiUtilCore {
-  private static final Logger LOG = Logger.getInstance(PsiUtil.class);
+  private static final Logger LOGGER = Logger.getInstance(PsiUtil.class);
 
   public static final int ACCESS_LEVEL_PUBLIC = 4;
   public static final int ACCESS_LEVEL_PROTECTED = 3;
@@ -847,7 +847,7 @@ public final class PsiUtil extends PsiUtilCore {
    * Note that traversal goes through context elements.
    */
   public static @Nullable PsiModifierListOwner getEnclosingStaticElement(@NotNull PsiElement place, @Nullable PsiClass aClass) {
-    LOG.assertTrue(aClass == null || !place.isPhysical() || PsiTreeUtil.isContextAncestor(aClass, place, false));
+    LOGGER.assertTrue(aClass == null || !place.isPhysical() || PsiTreeUtil.isContextAncestor(aClass, place, false));
     PsiElement parent = place;
     while (parent != aClass) {
       if (parent == null) return null;
@@ -915,7 +915,7 @@ public final class PsiUtil extends PsiUtilCore {
       if (substituted instanceof PsiWildcardType) {
         if (substitutionMap == null) substitutionMap = new HashMap<>(substitutor.getSubstitutionMap());
         PsiCapturedWildcardType capturedWildcard = (PsiCapturedWildcardType)captureSubstitutor.substitute(typeParameter);
-        LOG.assertTrue(capturedWildcard != null);
+        LOGGER.assertTrue(capturedWildcard != null);
         PsiType upperBound = PsiCapturedWildcardType.captureUpperBound(typeParameter, (PsiWildcardType)substituted, captureSubstitutor);
         if (upperBound != null) {
           capturedWildcard.setUpperBound(upperBound);
@@ -1338,7 +1338,7 @@ public final class PsiUtil extends PsiUtilCore {
     if (!type.isValid()) {
       TimeoutUtil.sleep(1); // to see if processing in another thread suddenly makes the type valid again (which is a bug)
       if (type.isValid()) {
-        LOG.error("PsiType resurrected: " + type + " of " + type.getClass() + " " + customMessage);
+        LOGGER.error("PsiType resurrected: " + type + " of " + type.getClass() + " " + customMessage);
         return;
       }
       if (type instanceof PsiClassType) {
@@ -1539,7 +1539,7 @@ public final class PsiUtil extends PsiUtilCore {
   }
 
   private static final Set<String> KEYWORDS = Collections.unmodifiableSet(
-    ContainerUtil.newHashSet(ABSTRACT, BOOLEAN, BREAK, BYTE, CASE, CATCH, CHAR, CLASS, CONST, CONTINUE, DEFAULT, DO, DOUBLE, ELSE, EXTENDS,
+    ContainerUtil.newHashSet(ABSTRACT, BOOLEAN, BREAK, BYTE, CASE, CATCH, LOG, CHAR, CLASS, CONST, CONTINUE, DEFAULT, DO, DOUBLE, ELSE, EXTENDS,
                              FALSE, FINAL, FINALLY, FLOAT, FOR, GOTO, IF, IMPLEMENTS, IMPORT, INSTANCEOF, INT, INTERFACE, LONG, NATIVE,
                              NEW, NON_SEALED, NULL, PACKAGE, PRIVATE, PROTECTED, PUBLIC, RETURN, SHORT, STATIC, STRICTFP, SUPER, SWITCH,
                              SYNCHRONIZED, THIS, THROW, THROWS, TRANSIENT, TRUE, TRY, VOID, VOLATILE, WHILE));
