@@ -12,6 +12,7 @@ import com.intellij.codeInspection.dataFlow.jvm.FieldChecker;
 import com.intellij.codeInspection.dataFlow.types.DfTypes;
 import com.intellij.codeInspection.dataFlow.value.*;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.util.*;
 import com.intellij.util.JavaPsiConstructorUtil;
 import com.intellij.util.ObjectUtils;
@@ -44,7 +45,7 @@ public final class PlainDescriptor extends PsiVarDescriptor {
 
   @Override
   PsiType getType(@Nullable DfaVariableValue qualifier) {
-    PsiType type = myVariable.getType();
+    PsiType type = myVariable instanceof PsiParameterImpl paramImpl ? paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback() : myVariable.getType();
     if (type instanceof PsiEllipsisType) {
       type = ((PsiEllipsisType)type).toArrayType();
     }

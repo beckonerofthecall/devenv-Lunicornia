@@ -14,6 +14,7 @@ import com.intellij.codeInspection.dataFlow.value.DfaControlTransferValue.Trap;
 import com.intellij.codeInspection.dataFlow.value.DfaVariableValue;
 import com.intellij.codeInspection.dataFlow.value.VariableDescriptor;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.containers.FList;
 import org.jetbrains.annotations.NotNull;
@@ -49,7 +50,7 @@ public class TryCatchTrap implements Trap {
     public @Unmodifiable @NotNull List<TypeConstraint> constraints() {
       PsiParameter parameter = mySection.getParameter();
       if (parameter == null) return Collections.emptyList();
-      PsiType type = parameter.getType();
+      PsiType type = parameter instanceof PsiParameterImpl paramImpl ? paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback() : parameter.getType();
       List<PsiType> types = type instanceof PsiDisjunctionType ? ((PsiDisjunctionType)type).getDisjunctions() : List.of(type);
       return ContainerUtil.map(types, TypeConstraints::instanceOf);
     }

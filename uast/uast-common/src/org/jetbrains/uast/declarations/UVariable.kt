@@ -54,7 +54,7 @@ interface UVariable : UDeclaration, PsiVariable {
       uAnnotations.joinTo(this, separator = " ", postfix = " ") { it.asRenderString() }
     }
     append(javaPsiInternal.renderModifiers())
-    append("var ").append(javaPsiInternal.name).append(": ").append(javaPsiInternal.type.getCanonicalText(false))
+    append("var ").append(javaPsiInternal.name).append(": ").append(javaPsiInternal.type!!.getCanonicalText(false))
     uastInitializer?.let { initializer -> append(" = " + initializer.asRenderString()) }
   }
 }

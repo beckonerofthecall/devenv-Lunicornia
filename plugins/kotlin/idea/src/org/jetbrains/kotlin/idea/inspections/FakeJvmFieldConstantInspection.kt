@@ -6,6 +6,7 @@ import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.*
+import com.intellij.psi.impl.source.PsiParameterImpl
 import org.jetbrains.kotlin.asJava.elements.KtLightFieldForSourceDeclarationSupport
 import org.jetbrains.kotlin.idea.base.resources.KotlinBundle
 import org.jetbrains.kotlin.idea.codeinsight.api.classic.inspections.AbstractKotlinInspection
@@ -47,7 +48,13 @@ class FakeJvmFieldConstantInspection : AbstractKotlinInspection() {
             override fun visitVariable(variable: PsiVariable) {
                 super.visitVariable(variable)
 
-                val leftType = variable.type as? PsiPrimitiveType ?: return
+                val type: PsiType = when (variable)
+                {
+                    is PsiParameterImpl -> variable.typeOptionalOrReturnJavaLangExceptionAsFallback
+                    else -> variable.type
+                }
+
+                val leftType = type as? PsiPrimitiveType ?: return
                 val initializer = variable.initializer ?: return
                 checkAssignmentChildren(initializer, leftType, holder)
             }

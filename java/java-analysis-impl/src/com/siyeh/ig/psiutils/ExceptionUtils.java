@@ -17,6 +17,7 @@ package com.siyeh.ig.psiutils;
 
 import com.intellij.codeInsight.ExceptionUtil;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.util.InheritanceUtil;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.JavaPsiConstructorUtil;
@@ -199,7 +200,7 @@ public final class ExceptionUtils {
   public static Set<PsiType> getExceptionTypesHandled(PsiTryStatement statement) {
     final Set<PsiType> out = new HashSet<>(5);
     for (PsiParameter parameter : statement.getCatchBlockParameters()) {
-      final PsiType type = parameter.getType();
+      final PsiType type = parameter instanceof PsiParameterImpl paramImpl ? paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback() : parameter.getType();
       if (type instanceof PsiDisjunctionType disjunctionType) {
         out.addAll(disjunctionType.getDisjunctions());
       } else {

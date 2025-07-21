@@ -50,7 +50,14 @@ public interface PsiParameter extends PsiVariable, JvmParameter, PsiJvmModifiers
   // binary compatibility
   @Override
   default PsiAnnotation @NotNull [] getAnnotations() {
-    return PsiJvmModifiersOwner.super.getAnnotations();
+    try
+    {
+      return PsiJvmModifiersOwner.super.getAnnotations();
+    }
+    catch (Exception ignored)
+    {
+      return PsiAnnotation.EMPTY_ARRAY;
+    }
   }
 
   @Override

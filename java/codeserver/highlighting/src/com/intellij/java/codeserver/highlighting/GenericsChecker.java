@@ -387,6 +387,7 @@ final class GenericsChecker {
 
     List<PsiTypeElement> typeElements = PsiUtil.getParameterTypeElements(parameter);
     for (PsiTypeElement typeElement : typeElements) {
+      if (typeElement == null) continue;
       if (PsiUtil.resolveClassInClassTypeOnly(typeElement.getType()) instanceof PsiTypeParameter) {
         myVisitor.report(JavaErrorKinds.CATCH_TYPE_PARAMETER.create(typeElement));
       }

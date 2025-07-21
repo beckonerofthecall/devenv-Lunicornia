@@ -10,6 +10,7 @@ import com.intellij.pom.java.JavaFeature;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.IncompleteModelUtil;
 import com.intellij.psi.impl.PsiImplUtil;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.util.*;
 import com.intellij.refactoring.util.RefactoringChangeUtil;
 import com.intellij.util.ArrayUtil;
@@ -72,7 +73,19 @@ final class StatementChecker {
   }
 
   void checkCatchTypeIsDisjoint(@NotNull PsiParameter parameter) {
-    if (!(parameter.getType() instanceof PsiDisjunctionType)) return;
+
+    PsiType catchParamType;
+
+    if (parameter instanceof PsiParameterImpl paramImpl)
+    {
+      catchParamType = paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback();
+    }
+    else
+    {
+      catchParamType = parameter.getType();
+    }
+
+    if (!(catchParamType instanceof PsiDisjunctionType)) return;
 
     List<PsiTypeElement> typeElements = PsiUtil.getParameterTypeElements(parameter);
     for (int i = 0, size = typeElements.size(); i < size; i++) {
@@ -125,7 +138,17 @@ final class StatementChecker {
     PsiElement declarationScope = parameter.getDeclarationScope();
     if (!(declarationScope instanceof PsiCatchSection)) return;
 
-    PsiType caughtType = parameter.getType();
+    PsiType caughtType;
+
+    if (parameter instanceof PsiParameterImpl paramImpl)
+    {
+      caughtType = paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback();
+    }
+    else
+    {
+      caughtType = parameter.getType();
+    }
+
     if (caughtType instanceof PsiClassType) {
       checkSimpleCatchParameter(parameter, thrownTypes, (PsiClassType)caughtType);
       return;

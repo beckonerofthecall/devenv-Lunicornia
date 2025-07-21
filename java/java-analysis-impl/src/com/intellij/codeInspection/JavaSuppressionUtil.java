@@ -146,8 +146,14 @@ public final class JavaSuppressionUtil {
   }
 
   private static @NotNull Collection<String> getInspectionIdsSuppressedInAnnotation(@NotNull PsiModifierListOwner owner) {
-    if (!PsiUtil.isAvailable(JavaFeature.ANNOTATIONS, owner)) return Collections.emptyList();
-    PsiModifierList modifierList = owner.getModifierList();
+    PsiModifierList modifierList;
+    try {
+      if (!PsiUtil.isAvailable(JavaFeature.ANNOTATIONS, owner)) throw new Exception();
+      modifierList = owner.getModifierList();
+    }
+    catch (Exception e) {
+      return Collections.emptyList();
+    }
     return getInspectionIdsSuppressedInAnnotation(modifierList);
   }
 

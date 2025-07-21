@@ -8,6 +8,7 @@ import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.controlFlow.*;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.Consumer;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
@@ -84,7 +85,7 @@ public final class HighlightExitPointsHandler extends HighlightUsagesHandlerBase
         if (target instanceof PsiTryStatement tryStatement) {
           final PsiParameter[] params = tryStatement.getCatchBlockParameters();
           for (PsiParameter param : params) {
-            if (param.getType().isAssignableFrom(exceptionType)) {
+            if ((param instanceof PsiParameterImpl paramImpl ? paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback() : param.getType()).isAssignableFrom(exceptionType)) {
               break;
             }
           }

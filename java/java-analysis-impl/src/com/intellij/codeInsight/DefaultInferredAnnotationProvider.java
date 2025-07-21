@@ -7,6 +7,7 @@ import com.intellij.codeInspection.dataFlow.inference.JavaSourceInference;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiMethodImpl;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.util.containers.ContainerUtil;
 import com.siyeh.ig.callMatcher.CallMatcher;
@@ -72,7 +73,7 @@ public final class DefaultInferredAnnotationProvider implements InferredAnnotati
         anno = getInferredNullabilityAnnotation((PsiMethodImpl)listOwner);
       }
       if (listOwner instanceof PsiParameter) {
-        anno = getInferredNullabilityAnnotation((PsiParameter)listOwner);
+        anno = getInferredNullabilityAnnotation((PsiParameter)listOwner, listOwner instanceof PsiParameterImpl paramImpl ? paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback() : null);
       }
       return anno == null ? null : anno.hasQualifiedName(annotationFQN) ? anno : null;
     }
@@ -170,13 +171,21 @@ public final class DefaultInferredAnnotationProvider implements InferredAnnotati
     }
     return null;
   }
-
-  private boolean hasExplicitNullability(PsiModifierListOwner owner) {
-    return NullableNotNullManager.getInstance(myProject).findExplicitNullability(owner) != null;
+  private boolean hasExplicitNullability(PsiModifierListOwner owner)
+  {
+    return hasExplicitNullability(owner, null);
   }
 
-  private @Nullable PsiAnnotation getInferredNullabilityAnnotation(PsiParameter parameter) {
-    if (hasExplicitNullability(parameter)) {
+  private boolean hasExplicitNullability(PsiModifierListOwner owner, @Nullable PsiType overrideType) {
+    return NullableNotNullManager.getInstance(myProject).findExplicitNullability(owner, overrideType) != null;
+  }
+  private @Nullable PsiAnnotation getInferredNullabilityAnnotation(PsiParameter parameter)
+  {
+    return getInferredNullabilityAnnotation(parameter, null);
+  }
+
+  private @Nullable PsiAnnotation getInferredNullabilityAnnotation(PsiParameter parameter, @Nullable PsiType overrideType) {
+    if (hasExplicitNullability(parameter, overrideType)) {
       return null;
     }
     PsiElement parent = parameter.getParent();

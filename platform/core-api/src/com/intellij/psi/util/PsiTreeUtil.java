@@ -432,6 +432,10 @@ public class PsiTreeUtil {
     return child;
   }
 
+  public static @Nullable <T extends PsiElement> T getOptionalChildOfType(@NotNull PsiElement element, @NotNull Class<T> aClass) {
+    return getChildOfType(element, aClass);
+  }
+
   public static int countChildrenOfType(@NotNull PsiElement element, @NotNull Class<? extends PsiElement> clazz) {
     int result = 0;
     for (PsiElement cur = element.getFirstChild(); cur != null; cur = cur.getNextSibling()) {

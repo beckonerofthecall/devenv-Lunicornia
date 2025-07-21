@@ -7,6 +7,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.controlFlow.*;
 import com.intellij.psi.impl.PsiClassImplUtil;
 import com.intellij.psi.impl.PsiImplUtil;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.infos.MethodCandidateInfo;
 import com.intellij.psi.scope.MethodProcessorSetupFailedException;
 import com.intellij.psi.scope.processor.MethodResolverProcessor;
@@ -818,7 +819,19 @@ public final class ExceptionUtil {
 
     final PsiParameter[] catchBlockParameters = tryStatement.getCatchBlockParameters();
     for (PsiParameter parameter : catchBlockParameters) {
-      PsiType paramType = parameter.getType();
+
+      PsiType paramType;
+
+      if (parameter instanceof PsiParameterImpl)
+      {
+        PsiParameterImpl paramImpl = (PsiParameterImpl) parameter;
+        paramType = paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback();
+      }
+      else
+      {
+        paramType = parameter.getType();
+      }
+
       if (paramType.isAssignableFrom(exceptionType)) return new HandlePlace.TryCatch(tryStatement, parameter);
     }
 

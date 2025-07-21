@@ -89,7 +89,13 @@ public class AnnotationUtil {
   }
 
   private static @Nullable List<PsiAnnotation> findOwnAnnotations(final @NotNull PsiModifierListOwner listOwner, @NotNull Iterable<String> annotationNames) {
-    final PsiModifierList list = listOwner.getModifierList();
+    PsiModifierList list;
+    try {
+      list = listOwner.getModifierList();
+    }
+    catch (Exception e) {
+      return null;
+    }
     if (list == null) {
       return null;
     }
@@ -307,7 +313,15 @@ public class AnnotationUtil {
   }
 
   private static boolean isAnnotated(@NotNull PsiModifierListOwner listOwner, @NotNull String annotationFQN, @Flags int flags, @Nullable Set<? super PsiMember> processed) {
-    PsiModifierList modifierList = listOwner.getModifierList();
+    PsiModifierList modifierList;
+    try
+    {
+      modifierList = listOwner.getModifierList();
+    }
+    catch (Exception e)
+    {
+      return false;
+    }
     if (modifierList == null) return false;
 
     PsiAnnotation annotation = modifierList.findAnnotation(annotationFQN);

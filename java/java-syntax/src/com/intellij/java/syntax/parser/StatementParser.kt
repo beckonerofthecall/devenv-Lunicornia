@@ -24,7 +24,6 @@ import com.intellij.pom.java.JavaFeature
 import com.intellij.pom.java.LanguageLevel
 import org.jetbrains.annotations.ApiStatus
 import org.jetbrains.annotations.Contract
-import kotlin.jvm.JvmOverloads
 
 open class StatementParser(
   private val myParser: JavaParser,
@@ -485,7 +484,7 @@ open class StatementParser(
   private fun parseForEachFromColon(
     builder: SyntaxTreeBuilder,
     statement: SyntaxTreeBuilder.Marker,
-    foreachStatement: SyntaxElementType
+    foreachStatement: SyntaxElementType,
   ): SyntaxTreeBuilder.Marker {
     builder.advanceLexer()
 
@@ -499,7 +498,7 @@ open class StatementParser(
   private fun parserForEachFromRparenth(
     builder: SyntaxTreeBuilder,
     statement: SyntaxTreeBuilder.Marker,
-    forEachType: SyntaxElementType
+    forEachType: SyntaxElementType,
   ): SyntaxTreeBuilder.Marker {
     if (expectOrError(builder, JavaSyntaxTokenType.RPARENTH, "expected.rparen") && parseStatement(builder) == null) {
       error(builder, message("expected.statement"))
@@ -715,7 +714,20 @@ open class StatementParser(
     val section = builder.mark()
     builder.advanceLexer()
 
-    if (!builder.expect(JavaSyntaxTokenType.LPARENTH)) {
+    if (builder.tokenType == JavaSyntaxTokenType.SEMICOLON)
+    {
+      builder.advanceLexer()
+      val fakeParam = builder.mark()
+
+      fakeParam.done(JavaSyntaxElementType.PARAMETER)
+
+      val block = builder.mark()
+      block.done(JavaSyntaxElementType.CODE_BLOCK)
+
+      section.done(JavaSyntaxElementType.CATCH_SECTION)
+      return true
+    }
+    else if (!builder.expect(JavaSyntaxTokenType.LPARENTH)) {
       error(builder, message("expected.lparen"))
       done(section, JavaSyntaxElementType.CATCH_SECTION, myParser.languageLevel)
       return false

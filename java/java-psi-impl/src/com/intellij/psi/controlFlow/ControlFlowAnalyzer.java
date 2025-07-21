@@ -9,6 +9,7 @@ import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.JavaPsiPatternUtil;
 import com.intellij.psi.util.JavaPsiRecordUtil;
@@ -1071,10 +1072,22 @@ final class ControlFlowAnalyzer extends JavaElementVisitor {
 
   private @NotNull List<PsiElement> findThrowToBlocks(@NotNull PsiClassType throwType) {
     List<PsiElement> blocks = new ArrayList<>();
-    for (int i = myCatchParameters.size() - 1; i >= 0; i--) {
+    for (int i = myCatchParameters.size() - 1; i >= 0; i--)
+    {
       ProgressManager.checkCanceled();
+
       PsiParameter parameter = myCatchParameters.get(i);
-      PsiType catchType = parameter.getType();
+      PsiType catchType;
+      if (parameter instanceof PsiParameterImpl)
+      {
+        PsiParameterImpl paramImpl = (PsiParameterImpl) parameter;
+        catchType = paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback();
+      }
+      else
+      {
+        catchType = parameter.getType();
+      }
+
       if (ControlFlowUtil.isCaughtExceptionType(throwType, catchType)) {
         blocks.add(myCatchBlocks.get(i));
       }
@@ -1162,7 +1175,18 @@ final class ControlFlowAnalyzer extends JavaElementVisitor {
       myCatchParameters.push(catchBlockParameters[i]);
       myCatchBlocks.push(catchBlocks[i]);
 
-      final PsiType type = catchBlockParameters[i].getType();
+      PsiParameter parameter = catchBlockParameters[i];
+      PsiType type;
+      if (parameter instanceof PsiParameterImpl)
+      {
+        PsiParameterImpl paramImpl = (PsiParameterImpl) parameter;
+        type = paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback();
+      }
+      else
+      {
+        type = parameter.getType();
+      }
+
       // todo cast param
       if (type instanceof PsiClassType && ExceptionUtil.isUncheckedExceptionOrSuperclass((PsiClassType)type)) {
         myUnhandledExceptionCatchBlocks.push(catchBlocks[i]);

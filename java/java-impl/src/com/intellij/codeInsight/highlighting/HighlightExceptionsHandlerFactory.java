@@ -6,6 +6,7 @@ import com.intellij.featureStatistics.FeatureUsageTracker;
 import com.intellij.java.syntax.parser.JavaKeywords;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -79,7 +80,7 @@ public final class HighlightExceptionsHandlerFactory extends HighlightUsagesHand
     PsiParameter[] parameters = tryStatement.getCatchBlockParameters();
     Predicate<PsiType> filter = type -> {
       for (PsiParameter p : parameters) {
-        boolean isAssignable = p.getType().isAssignableFrom(type);
+        boolean isAssignable = (p instanceof PsiParameterImpl paramImpl ? paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback() : p.getType()).isAssignableFrom(type);
         if (p == parameter) return isAssignable;
         else if (isAssignable) return false;
       }

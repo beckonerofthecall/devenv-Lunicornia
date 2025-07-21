@@ -11,6 +11,7 @@ import com.intellij.psi.impl.ElementPresentationUtil;
 import com.intellij.psi.impl.PsiImplUtil;
 import com.intellij.psi.impl.java.stubs.JavaStubElementTypes;
 import com.intellij.psi.impl.java.stubs.PsiParameterStub;
+import com.intellij.psi.impl.java.stubs.impl.PsiModifierListStubImpl;
 import com.intellij.psi.impl.source.tree.CompositeElement;
 import com.intellij.psi.impl.source.tree.JavaSharedImplUtil;
 import com.intellij.psi.infos.MethodCandidateInfo;
@@ -142,7 +143,8 @@ public class PsiParameterImpl extends JavaStubPsiElement<PsiParameterStub> imple
 
   @Override
   public final @NotNull PsiIdentifier getNameIdentifier() {
-    return PsiTreeUtil.getRequiredChildOfType(this, PsiIdentifier.class);
+    @Nullable PsiIdentifier maybeNull = PsiTreeUtil.getOptionalChildOfType(this, PsiIdentifier.class);
+    return maybeNull == null ? JavaPsiFacade.getElementFactory(this.getProject()).createIdentifier("ignored") : maybeNull;
   }
 
   @Override
@@ -174,6 +176,42 @@ public class PsiParameterImpl extends JavaStubPsiElement<PsiParameterStub> imple
     }
   }
 
+  public @Nullable PsiType getOptionalType() {
+    PsiParameterStub stub = getStub();
+    if (stub != null) {
+      PsiType type = myCachedType;
+      if (type == null) {
+        type = JavaSharedImplUtil.createTypeFromStub(this, stub.getType());
+        myCachedType = type;
+      }
+      return type;
+    }
+
+    myCachedType = null;
+
+    PsiTypeElement typeElement = getTypeElement();
+    if (typeElement == null)
+      return null;
+    else if (isLambdaParameter() && typeElement.isInferredType()) {
+      assert isLambdaParameter() : this;
+      return getLambdaParameterType(this);
+    }
+    else {
+      return JavaSharedImplUtil.getType(typeElement, getNameIdentifier());
+    }
+  }
+  
+  public @NotNull PsiType getTypeOptionalOrReturnJavaLangExceptionAsFallback()
+  {
+    PsiType type = this.getOptionalType();
+    if (type == null)
+    {
+      PsiElementFactory factory = JavaPsiFacade.getElementFactory(this.getProject());
+      type = factory.createTypeByFQClassName("java.lang.Exception");
+    }
+    return type;
+  }
+
   private boolean isLambdaParameter() {
     PsiElement parent = getParent();
     return parent instanceof PsiParameterList && parent.getParent() instanceof PsiLambdaExpression;
@@ -191,7 +229,7 @@ public class PsiParameterImpl extends JavaStubPsiElement<PsiParameterStub> imple
 
   @Override
   public @NotNull PsiModifierList getModifierList() {
-    return getRequiredStubOrPsiChild(JavaStubElementTypes.MODIFIER_LIST, PsiModifierList.class);
+      return getRequiredStubOrPsiChild(JavaStubElementTypes.MODIFIER_LIST, PsiModifierList.class);
   }
 
   @Override

@@ -40,11 +40,19 @@ public final class ReassignedVariableInspection extends AbstractBaseJavaLocalIns
 
     private boolean checkReassigned(@NotNull PsiVariable variable) {
       PsiIdentifier nameIdentifier = variable.getNameIdentifier();
-      if (nameIdentifier != null &&
-          !variable.hasModifierProperty(PsiModifier.FINAL) &&
-          ControlFlowUtil.isReassigned(variable, myLocalVariableProblems)) {
-        myHolder.registerProblem(nameIdentifier, getReassignedMessage(variable));
-        return true;
+      if (nameIdentifier != null)
+      {
+        boolean hasFinalModifier;
+        try {
+          hasFinalModifier = variable.hasModifierProperty(PsiModifier.FINAL);
+        } catch (Exception e) {
+          hasFinalModifier = true;
+        }
+        if (!hasFinalModifier && ControlFlowUtil.isReassigned(variable, myLocalVariableProblems))
+        {
+          myHolder.registerProblem(nameIdentifier, getReassignedMessage(variable));
+          return true;
+        }
       }
       return false;
     }

@@ -7,6 +7,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.pom.java.JavaFeature;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.Constants;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.impl.source.tree.ChildRole;
 import com.intellij.psi.impl.source.tree.CompositePsiElement;
 import com.intellij.psi.scope.PsiScopeProcessor;
@@ -51,7 +52,7 @@ public class PsiCatchSectionImpl extends CompositePsiElement implements PsiCatch
   public PsiType getCatchType() {
     PsiParameter parameter = getParameter();
     if (parameter == null) return null;
-    return parameter.getType();
+    return parameter instanceof PsiParameterImpl ? ((PsiParameterImpl) parameter).getTypeOptionalOrReturnJavaLangExceptionAsFallback() : parameter.getType();
   }
 
   @Override

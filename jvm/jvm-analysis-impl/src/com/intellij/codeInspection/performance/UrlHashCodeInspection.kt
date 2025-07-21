@@ -8,6 +8,9 @@ import com.intellij.codeInspection.registerUProblem
 import com.intellij.psi.CommonClassNames.*
 import com.intellij.psi.PsiClassType
 import com.intellij.psi.PsiElementVisitor
+import com.intellij.psi.PsiParameter
+import com.intellij.psi.PsiType
+import com.intellij.psi.impl.source.PsiParameterImpl
 import com.intellij.uast.UastHintedVisitorAdapter
 import com.intellij.util.asSafely
 import com.siyeh.HardcodedMethodConstants.EQUALS
@@ -15,6 +18,8 @@ import com.siyeh.HardcodedMethodConstants.HASH_CODE
 import com.siyeh.ig.callMatcher.CallMatcher
 import org.jetbrains.uast.*
 import org.jetbrains.uast.visitor.AbstractUastNonRecursiveVisitor
+
+import org.jetbrains.uast.java.JavaUParameter;
 
 class UrlHashCodeInspection : AbstractBaseUastLocalInspectionTool() {
   private fun UExpression.isUrlType() = getExpressionType()?.equalsToText(JAVA_NET_URL) == true
@@ -50,9 +55,20 @@ class UrlHashCodeInspection : AbstractBaseUastLocalInspectionTool() {
   }
 
   private inner class UrlHashCodeVisitor(private val holder: ProblemsHolder) : AbstractUastNonRecursiveVisitor() {
-    override fun visitVariable(node: UVariable): Boolean {
-      val type = node.type.asSafely<PsiClassType>() ?: return true
-      findUrlCollection(type) ?: return true
+    override fun visitVariable(node: UVariable): Boolean
+    {
+      val type: PsiType = when (node)
+      {
+        is JavaUParameter -> when (node.javaPsi)
+        {
+          is PsiParameterImpl -> (node.javaPsi as PsiParameterImpl).typeOptionalOrReturnJavaLangExceptionAsFallback
+          else -> node.type
+        }
+        else -> node.type
+      }
+
+      val type2 = type.asSafely<PsiClassType>() ?: return true
+      findUrlCollection(type2) ?: return true
       holder.registerUProblem(node, JvmAnalysisBundle.message("jvm.inspections.collection.contains.url.problem.descriptor", node.name))
       return true
     }

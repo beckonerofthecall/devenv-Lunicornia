@@ -21,6 +21,7 @@ import com.intellij.pom.java.LanguageLevel;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.IncompleteModelUtil;
 import com.intellij.psi.impl.source.DummyHolder;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.impl.source.resolve.JavaResolveUtil;
 import com.intellij.psi.impl.source.resolve.graphInference.PsiPolyExpressionUtil;
 import com.intellij.psi.impl.source.tree.java.PsiReferenceExpressionImpl;
@@ -236,11 +237,23 @@ final class JavaErrorVisitor extends JavaElementVisitor {
       if (!hasErrorResults()) checkFeature(parameter, JavaFeature.VARARGS);
       if (!hasErrorResults()) myMethodChecker.checkVarArgParameterWellFormed(parameter);
     }
-    else if (parent instanceof PsiCatchSection) {
-      if (!hasErrorResults() && parameter.getType() instanceof PsiDisjunctionType) {
+    else if (parent instanceof PsiCatchSection)
+    {
+      PsiType catchParamType;
+
+      if (parameter instanceof PsiParameterImpl paramImpl)
+      {
+        catchParamType = paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback();
+      }
+      else
+      {
+        catchParamType = parameter.getType();
+      }
+
+      if (!hasErrorResults() && catchParamType instanceof PsiDisjunctionType) {
         checkFeature(parameter, JavaFeature.MULTI_CATCH);
       }
-      if (!hasErrorResults()) myTypeChecker.checkMustBeThrowable(parameter, parameter.getType());
+      if (!hasErrorResults()) myTypeChecker.checkMustBeThrowable(parameter, catchParamType);
       if (!hasErrorResults()) myStatementChecker.checkCatchTypeIsDisjoint(parameter);
       if (!hasErrorResults()) myGenericsChecker.checkCatchParameterIsClass(parameter);
     }

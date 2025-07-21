@@ -31,6 +31,7 @@ import com.intellij.profile.codeInspection.ProjectInspectionProfileManager;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.impl.source.DummyHolder;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.search.DelegatingGlobalSearchScope;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.CachedValueProvider.Result;
@@ -400,7 +401,7 @@ public class NullableNotNullManagerImpl extends NullableNotNullManager implement
                                                               PsiAnnotation.TargetType @NotNull [] placeTargetTypes) {
     LOG.assertTrue(!(container instanceof PsiPackage)); // Packages are handled separately in findNullityDefaultOnPackage
     ContextNullabilityInfo res = ContextNullabilityInfo.EMPTY;
-    PsiModifierList modifierList = container.getModifierList();
+    PsiModifierList modifierList = container instanceof PsiParameterImpl ? null : container.getModifierList();
     if (modifierList != null) {
       for (PsiAnnotation annotation : modifierList.getAnnotations()) {
         ContextNullabilityInfo info = checkNullityDefault(annotation, placeTargetTypes, false);
@@ -519,11 +520,12 @@ public class NullableNotNullManagerImpl extends NullableNotNullManager implement
 
   @Override
   public final @Nullable NullabilityAnnotationInfo findEffectiveNullabilityInfo(@NotNull PsiModifierListOwner owner) {
-    PsiType type = PsiUtil.getTypeByPsiElement(owner);
+    PsiType type = owner instanceof PsiParameterImpl paramImpl ? paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback() : PsiUtil.getTypeByPsiElement(owner);
     if (type == null || TypeConversionUtil.isPrimitiveAndNotNull(type)) return null;
 
     return CachedValuesManager.getCachedValue(owner, () -> {
-      NullabilityAnnotationInfo info = doFindEffectiveNullabilityAnnotation(owner);
+      NullabilityAnnotationInfo info = doFindEffectiveNullabilityAnnotation(
+        owner, owner instanceof PsiParameterImpl paramImpl ? paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback() : null);
 
       PsiFile file = owner.getContainingFile();
       if (file != null

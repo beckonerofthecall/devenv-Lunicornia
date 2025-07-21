@@ -13,6 +13,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.pom.java.JavaFeature;
 import com.intellij.pom.java.LanguageLevel;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiTypesUtil;
@@ -93,8 +94,9 @@ public final class OptionalAssignedToNullInspection extends AbstractBaseJavaLoca
 
       @Override
       public void visitVariable(@NotNull PsiVariable variable) {
-        checkNulls(variable.getType(), variable.getInitializer(),
-                   JavaBundle.message("inspection.null.value.for.optional.context.declaration"));
+        checkNulls(
+          variable instanceof PsiParameterImpl paramImpl ? paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback() : variable.getType(),
+          variable.getInitializer(), JavaBundle.message("inspection.null.value.for.optional.context.declaration"));
       }
 
       @Override

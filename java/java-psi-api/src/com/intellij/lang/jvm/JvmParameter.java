@@ -3,6 +3,7 @@ package com.intellij.lang.jvm;
 
 import com.intellij.lang.jvm.types.JvmType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a parameter of a method or a constructor.
