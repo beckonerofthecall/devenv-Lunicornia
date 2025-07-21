@@ -142,13 +142,18 @@ public class WindowsDefenderChecker {
         }
       }
 
-      var statusQuery = new WbemcliUtil.WmiQuery<>("Root\\Microsoft\\Windows\\Defender", "MSFT_MpComputerStatus", MpComputerStatus.class);
-      var statusResult = statusQuery.execute(WMIC_COMMAND_TIMEOUT_MS);
-      if (LOG.isDebugEnabled()) LOG.debug(statusQuery.getWmiClassName() + ": " + statusResult.getResultCount());
-      if (statusResult.getResultCount() != 1) return false;
-      var rtProtection = statusResult.getValue(MpComputerStatus.RealTimeProtectionEnabled, 0);
-      if (LOG.isDebugEnabled()) LOG.debug("RealTimeProtectionEnabled: " + rtProtection + " (" + rtProtection.getClass().getName() + ')');
-      return Boolean.TRUE.equals(rtProtection);
+      var statusQuery = new WbemcliUtil.WmiQuery<>("Root\\Microsoft\\Windows\\Defender", "MSFT_MpComputerStatus", MpComputerStatus.class);try {
+        var statusResult = statusQuery.execute(WMIC_COMMAND_TIMEOUT_MS);
+        if (LOG.isDebugEnabled()) LOG.debug(statusQuery.getWmiClassName() + ": " + statusResult.getResultCount());
+        if (statusResult.getResultCount() != 1) return false;
+        var rtProtection = statusResult.getValue(MpComputerStatus.RealTimeProtectionEnabled, 0);
+        if (LOG.isDebugEnabled()) LOG.debug("RealTimeProtectionEnabled: " + rtProtection + " (" + rtProtection.getClass().getName() + ')');
+        return Boolean.TRUE.equals(rtProtection);
+      }
+      catch (Exception e)
+      {
+        return false;
+      }
     }
     catch (COMException e) {
       // reference: https://learn.microsoft.com/en-us/windows/win32/wmisdk/wmi-error-constants
