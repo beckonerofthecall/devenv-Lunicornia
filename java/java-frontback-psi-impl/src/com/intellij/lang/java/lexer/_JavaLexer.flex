@@ -76,7 +76,6 @@ HEX_EXPONENT = [Pp] [+-]? {DIGIT_OR_UNDERSCORE}*
   "byte" { return JavaTokenType.BYTE_KEYWORD; }
   "case" { return JavaTokenType.CASE_KEYWORD; }
   "catch" { return JavaTokenType.CATCH_KEYWORD; }
-  "log" { return JavaSyntaxTokenType.LOG_KEYWORD; }
   "char" { return JavaTokenType.CHAR_KEYWORD; }
   "class" { return JavaTokenType.CLASS_KEYWORD; }
   "const" { return JavaTokenType.CONST_KEYWORD; }

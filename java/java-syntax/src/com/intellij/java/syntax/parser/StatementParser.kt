@@ -83,7 +83,6 @@ open class StatementParser(
       when (tokenType) {
         JavaSyntaxTokenType.ELSE_KEYWORD -> error.error(message("else.without.if"))
         JavaSyntaxTokenType.CATCH_KEYWORD -> error.error(message("catch.without.try"))
-        JavaSyntaxTokenType.LOG_KEYWORD -> error.error(message("catch.without.try"))
         JavaSyntaxTokenType.FINALLY_KEYWORD -> error.error(message("finally.without.try"))
         else -> error.error(message("unexpected.token"))
       }
@@ -694,7 +693,7 @@ open class StatementParser(
       error(builder, message("expected.catch.or.finally"))
     }
     else {
-      while (builder.tokenType === JavaSyntaxTokenType.CATCH_KEYWORD || builder.tokenType === JavaSyntaxTokenType.LOG_KEYWORD) {
+      while (builder.tokenType === JavaSyntaxTokenType.CATCH_KEYWORD) {
         if (!parseCatchBlock(builder)) break
       }
 
@@ -711,7 +710,7 @@ open class StatementParser(
   }
 
   fun parseCatchBlock(builder: SyntaxTreeBuilder): Boolean {
-    require(builder.tokenType === JavaSyntaxTokenType.CATCH_KEYWORD || builder.tokenType === JavaSyntaxTokenType.LOG_KEYWORD) { builder.tokenType!! }
+    require(builder.tokenType === JavaSyntaxTokenType.CATCH_KEYWORD) { builder.tokenType!! }
     val section = builder.mark()
     builder.advanceLexer()
 
@@ -855,4 +854,4 @@ private val YIELD_STMT_INDICATOR_TOKENS: SyntaxElementTypeSet = syntaxElementTyp
   JavaSyntaxTokenType.RBRACE, JavaSyntaxTokenType.SEMICOLON, JavaSyntaxTokenType.CASE_KEYWORD
 )
 
-private val TRY_CLOSERS_SET: SyntaxElementTypeSet = syntaxElementTypeSetOf(JavaSyntaxTokenType.CATCH_KEYWORD, JavaSyntaxTokenType.LOG_KEYWORD, JavaSyntaxTokenType.FINALLY_KEYWORD)
+private val TRY_CLOSERS_SET: SyntaxElementTypeSet = syntaxElementTypeSetOf(JavaSyntaxTokenType.CATCH_KEYWORD, JavaSyntaxTokenType.FINALLY_KEYWORD)

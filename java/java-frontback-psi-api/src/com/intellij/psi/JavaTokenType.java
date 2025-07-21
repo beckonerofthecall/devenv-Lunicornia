@@ -38,7 +38,6 @@ public interface JavaTokenType extends TokenType {
   IElementType BYTE_KEYWORD = new IKeywordElementType("BYTE_KEYWORD");
   IElementType CASE_KEYWORD = new IKeywordElementType("CASE_KEYWORD");
   IElementType CATCH_KEYWORD = new IKeywordElementType("CATCH_KEYWORD");
-  IElementType LOG_KEYWORD = new IKeywordElementType("LOG_KEYWORD");
   IElementType CHAR_KEYWORD = new IKeywordElementType("CHAR_KEYWORD");
   IElementType CLASS_KEYWORD = new IKeywordElementType("CLASS_KEYWORD");
   IElementType CONST_KEYWORD = new IKeywordElementType("CONST_KEYWORD");

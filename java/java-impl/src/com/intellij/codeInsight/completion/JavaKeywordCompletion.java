@@ -202,7 +202,6 @@ public class JavaKeywordCompletion {
       .withText("}")
       .withParent(psiElement(PsiCodeBlock.class).withParent(or(psiElement(PsiTryStatement.class), psiElement(PsiCatchSection.class))))
       .accepts(myPrevLeaf)) {
-      addKeyword(new OverridableSpace(createKeyword(JavaKeywords.LOG), JavaTailTypes.LOG_SEMICOLON));
       addKeyword(new OverridableSpace(createKeyword(JavaKeywords.CATCH), JavaTailTypes.CATCH_LPARENTH));
       addKeyword(new OverridableSpace(createKeyword(JavaKeywords.FINALLY), JavaTailTypes.FINALLY_LBRACE));
       List<LookupElement> elements = CatchLookupElement.create(myPrevLeaf);

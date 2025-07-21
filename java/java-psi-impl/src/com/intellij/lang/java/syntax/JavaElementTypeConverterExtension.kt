@@ -159,7 +159,6 @@ class JavaElementTypeConverterExtension : ElementTypeConverterFactory {
     JavaSyntaxTokenType.BYTE_KEYWORD to JavaTokenType.BYTE_KEYWORD,
     JavaSyntaxTokenType.CASE_KEYWORD to JavaTokenType.CASE_KEYWORD,
     JavaSyntaxTokenType.CATCH_KEYWORD to JavaTokenType.CATCH_KEYWORD,
-    JavaSyntaxTokenType.LOG_KEYWORD to JavaTokenType.LOG_KEYWORD,
     JavaSyntaxTokenType.CHAR_KEYWORD to JavaTokenType.CHAR_KEYWORD,
     JavaSyntaxTokenType.CLASS_KEYWORD to JavaTokenType.CLASS_KEYWORD,
     JavaSyntaxTokenType.CONST_KEYWORD to JavaTokenType.CONST_KEYWORD,

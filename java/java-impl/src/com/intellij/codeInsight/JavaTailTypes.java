@@ -5,7 +5,6 @@ import com.intellij.codeInsight.completion.InsertionContext;
 import com.intellij.codeInsight.completion.simple.BracesTailType;
 import com.intellij.codeInsight.completion.simple.ParenthesesTailType;
 import com.intellij.codeInsight.completion.simple.RParenthTailType;
-import com.intellij.codeInsight.completion.simple.SemicolonTailType;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.*;
@@ -18,7 +17,6 @@ import com.siyeh.ig.psiutils.SwitchUtils;
 import org.jetbrains.annotations.NotNull;
 
 import static com.intellij.psi.JavaTokenType.COLON;
-import static com.intellij.psi.JavaTokenType.SEMICOLON;
 
 public final class JavaTailTypes {
   public static final TailType CALL_RPARENTH = new RParenthTailType(){
@@ -151,10 +149,8 @@ public final class JavaTailTypes {
       return "CASE_ARROW";
     }
   };
-  private static final TailType SEMICOLON = new SemicolonTailType();
   private static final TailType BRACES = new BracesTailType();
   public static final TailType FINALLY_LBRACE = BRACES;
-  public static final TailType LOG_SEMICOLON = SEMICOLON;
   public static final TailType TRY_LBRACE = BRACES;
   public static final TailType DO_LBRACE = BRACES;
 
