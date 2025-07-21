@@ -116,6 +116,7 @@ final class StatementChecker {
 
     List<PsiTypeElement> typeElements = PsiUtil.getParameterTypeElements(parameter);
     for (PsiTypeElement typeElement : typeElements) {
+      if (typeElement == null) continue;
       PsiClass catchClass = PsiUtil.resolveClassInClassTypeOnly(typeElement.getType());
       if (catchClass == null) continue;
 

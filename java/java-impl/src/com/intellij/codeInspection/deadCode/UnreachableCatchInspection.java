@@ -54,6 +54,7 @@ public final class UnreachableCatchInspection extends AbstractBaseJavaLocalInspe
         List<PsiTypeElement> parameterTypeElements = PsiUtil.getParameterTypeElements(parameter);
         boolean isMultiCatch = parameterTypeElements.size() > 1;
         for (PsiTypeElement catchTypeElement : parameterTypeElements) {
+          if (catchTypeElement == null) continue;
           PsiType catchType = catchTypeElement.getType();
           if (ExceptionUtil.isGeneralExceptionType(catchType)) continue;
 

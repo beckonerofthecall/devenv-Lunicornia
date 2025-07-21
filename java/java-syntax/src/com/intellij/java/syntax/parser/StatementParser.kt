@@ -693,14 +693,16 @@ open class StatementParser(
       error(builder, message("expected.catch.or.finally"))
     }
     else {
+      var operand = Pair(false, false);
       while (builder.tokenType === JavaSyntaxTokenType.CATCH_KEYWORD) {
-        if (!parseCatchBlock(builder)) break
+        operand = parseCatchBlock(builder)
+        if (operand.second || !operand.first) break
       }
 
-      if (builder.expect(JavaSyntaxTokenType.FINALLY_KEYWORD)) {
-        val finallyBlock = parseCodeBlock(builder, true)
+      if ((!operand.second) && builder.expect(JavaSyntaxTokenType.FINALLY_KEYWORD)) {
+        val finallyBlock = this.parseStatement(builder)
         if (finallyBlock == null) {
-          error(builder, message("expected.lbrace"))
+          error(builder, message("expected.statement"))
         }
       }
     }
@@ -709,7 +711,7 @@ open class StatementParser(
     return statement
   }
 
-  fun parseCatchBlock(builder: SyntaxTreeBuilder): Boolean {
+  fun parseCatchBlock(builder: SyntaxTreeBuilder): Pair<Boolean, Boolean> {
     require(builder.tokenType === JavaSyntaxTokenType.CATCH_KEYWORD) { builder.tokenType!! }
     val section = builder.mark()
     builder.advanceLexer()
@@ -725,12 +727,12 @@ open class StatementParser(
       block.done(JavaSyntaxElementType.CODE_BLOCK)
 
       section.done(JavaSyntaxElementType.CATCH_SECTION)
-      return true
+      return Pair(true, true)
     }
     else if (!builder.expect(JavaSyntaxTokenType.LPARENTH)) {
       error(builder, message("expected.lparen"))
       done(section, JavaSyntaxElementType.CATCH_SECTION, myParser.languageLevel)
-      return false
+      return Pair(false, false)
     }
 
     val param = myParser.declarationParser.parseParameter(builder, false, true, false)
@@ -741,18 +743,18 @@ open class StatementParser(
     if (!builder.expect(JavaSyntaxTokenType.RPARENTH)) {
       error(builder, message("expected.rparen"))
       done(section, JavaSyntaxElementType.CATCH_SECTION, myParser.languageLevel)
-      return false
+      return Pair(false, false)
     }
 
     val body = parseCodeBlock(builder, true)
     if (body == null) {
       error(builder, message("expected.lbrace"))
       done(section, JavaSyntaxElementType.CATCH_SECTION, myParser.languageLevel)
-      return false
+      return Pair(false, false)
     }
 
     done(section, JavaSyntaxElementType.CATCH_SECTION, myParser.languageLevel)
-    return true
+    return Pair(true, false)
   }
 
   private fun parseAssertStatement(builder: SyntaxTreeBuilder): SyntaxTreeBuilder.Marker {

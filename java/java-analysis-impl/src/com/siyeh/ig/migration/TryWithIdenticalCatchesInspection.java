@@ -13,6 +13,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.controlFlow.ControlFlowUtil;
+import com.intellij.psi.impl.source.PsiParameterImpl;
 import com.intellij.psi.impl.source.tree.LeafPsiElement;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.search.LocalSearchScope;
@@ -317,7 +318,7 @@ public final class TryWithIdenticalCatchesInspection extends BaseInspection {
       final PsiParameter parameter = catchSection.getParameter();
       final PsiCodeBlock codeBlock = catchSection.getCatchBlock();
       if (parameter != null && codeBlock != null) {
-        final List<PsiClassType> types = getClassTypes(parameter.getType());
+        final List<PsiClassType> types = getClassTypes(parameter instanceof PsiParameterImpl paramImpl ? paramImpl.getTypeOptionalOrReturnJavaLangExceptionAsFallback() : parameter.getType());
         if (types != null && ControlFlowUtil.isEffectivelyFinal(parameter, codeBlock)) {
           final DuplicatesFinder finder = buildDuplicatesFinder(codeBlock, parameter);
           return new CatchSectionWrapper(catchSection, codeBlock, parameter, types, finder);
