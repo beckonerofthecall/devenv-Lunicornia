@@ -786,7 +786,7 @@ open class StatementParser(
     val statement = builder.mark()
     builder.advanceLexer()
 
-    if (parseExprInParenth(builder)) {
+    if (parseExprInParenth(builder, false)) {
       val body = if (block) parseCodeBlock(builder, true) else parseStatement(builder)
       if (body == null) {
         error(builder, message(if (block) "expected.lbrace" else "expected.statement"))
