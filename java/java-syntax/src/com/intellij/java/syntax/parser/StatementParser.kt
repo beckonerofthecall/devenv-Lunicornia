@@ -299,7 +299,7 @@ open class StatementParser(
       statement = builder.mark()
       builder.advanceLexer()
 
-      if (parseExprInParenth(builder)) {
+      if (parseExprInParenth(builder, errorOut = false)) {
         if (parseStatement(builder) == null) {
           error(builder, message("expected.statement"))
         }
@@ -797,26 +797,38 @@ open class StatementParser(
     return statement
   }
 
-  private fun parseExprInParenth(builder: SyntaxTreeBuilder): Boolean {
-    if (!builder.expect(JavaSyntaxTokenType.LPARENTH)) {
+  private fun parseExprInParenth(builder: SyntaxTreeBuilder, errorOut: Boolean = true): Boolean {
+    val hasFoundOpenParen = builder.expect(JavaSyntaxTokenType.LPARENTH);
+
+    if (!hasFoundOpenParen && errorOut) {
       error(builder, message("expected.lparen"))
       return false
     }
 
     val beforeExpr = builder.mark()
     val expr = myParser.expressionParser.parse(builder)
-    if (expr == null || builder.tokenType === JavaSyntaxTokenType.SEMICOLON) {
+    if (expr == null || (errorOut && builder.tokenType === JavaSyntaxTokenType.SEMICOLON)) {
       beforeExpr.rollbackTo()
-      error(builder, message("expected.expression"))
-      if (builder.tokenType !== JavaSyntaxTokenType.RPARENTH) {
+      if (expr == null)
+        error(builder, message("expected.expression"))
+      else
+        error(builder, message("expected.rparen"))
+      if (!hasFoundOpenParen || builder.tokenType !== JavaSyntaxTokenType.RPARENTH) {
         return false
       }
     }
     else {
       beforeExpr.drop()
-      if (builder.tokenType !== JavaSyntaxTokenType.RPARENTH) {
+      if (hasFoundOpenParen)
+      {
+        if (builder.expect(JavaSyntaxTokenType.RPARENTH))
+          return true;
         error(builder, message("expected.rparen"))
-        return false
+        return false;
+      }
+      else if (builder.tokenType !== JavaSyntaxTokenType.RPARENTH)
+      {
+        return true
       }
     }
 
