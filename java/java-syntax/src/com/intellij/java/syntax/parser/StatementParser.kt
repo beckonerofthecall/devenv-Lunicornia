@@ -327,7 +327,7 @@ open class StatementParser(
   }
 
   private fun parseWhileStatement(builder: SyntaxTreeBuilder): SyntaxTreeBuilder.Marker {
-    return parseExprInParenthWithBlock(builder, JavaSyntaxElementType.WHILE_STATEMENT, false)
+    return parseExprInParenthWithBlock(builder, JavaSyntaxElementType.WHILE_STATEMENT, block = false, errOut = false)
   }
 
 
@@ -528,7 +528,7 @@ open class StatementParser(
   }
 
   private fun parseSwitchStatement(builder: SyntaxTreeBuilder): SyntaxTreeBuilder.Marker {
-    return parseExprInParenthWithBlock(builder, JavaSyntaxElementType.SWITCH_STATEMENT, true)
+    return parseExprInParenthWithBlock(builder, JavaSyntaxElementType.SWITCH_STATEMENT, block = true, errOut = false)
   }
 
   /**
@@ -673,7 +673,7 @@ open class StatementParser(
   }
 
   private fun parseSynchronizedStatement(builder: SyntaxTreeBuilder): SyntaxTreeBuilder.Marker {
-    return parseExprInParenthWithBlock(builder, JavaSyntaxElementType.SYNCHRONIZED_STATEMENT, true)
+    return parseExprInParenthWithBlock(builder, JavaSyntaxElementType.SYNCHRONIZED_STATEMENT, block = true, errOut = false)
   }
 
   private fun parseTryStatement(builder: SyntaxTreeBuilder): SyntaxTreeBuilder.Marker {
@@ -782,11 +782,11 @@ open class StatementParser(
     return statement
   }
 
-  fun parseExprInParenthWithBlock(builder: SyntaxTreeBuilder, type: SyntaxElementType, block: Boolean): SyntaxTreeBuilder.Marker {
+  fun parseExprInParenthWithBlock(builder: SyntaxTreeBuilder, type: SyntaxElementType, block: Boolean, errOut: Boolean = true): SyntaxTreeBuilder.Marker {
     val statement = builder.mark()
     builder.advanceLexer()
 
-    if (parseExprInParenth(builder, false)) {
+    if (parseExprInParenth(builder, errOut)) {
       val body = if (block) parseCodeBlock(builder, true) else parseStatement(builder)
       if (body == null) {
         error(builder, message(if (block) "expected.lbrace" else "expected.statement"))

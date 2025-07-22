@@ -147,7 +147,7 @@ class PrattExpressionParser(private val myParser: JavaParser) {
       return typeCast
     }
     else if (tokenType === JavaSyntaxTokenType.SWITCH_KEYWORD) {
-      return myParser.statementParser.parseExprInParenthWithBlock(builder, JavaSyntaxElementType.SWITCH_EXPRESSION, true)
+      return myParser.statementParser.parseExprInParenthWithBlock(builder, JavaSyntaxElementType.SWITCH_EXPRESSION, block = true)
     }
     else {
       return parsePostfix(builder, mode)
